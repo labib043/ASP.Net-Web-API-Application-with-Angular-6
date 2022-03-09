@@ -1,0 +1,99 @@
+<h1 appYelloeFellow>MyProject</h1>
+<br/>
+
+ <form novalidate (ngSubmit)="submitInfo(teamForm , actionType)" style="padding-left: 1%;" >
+
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    Add Teams
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Team</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          
+            TeamName      
+           
+           
+           <div>
+             
+             <div>  <input [(ngModel)]="teamForm.TeamName" name="TeamName" type="text" /></div>      
+           </div>
+        </div>
+        <div class="modal-footer">
+          <select [(ngModel)]="actionType" name="actionType" (ngChangeModel)="actionType=$event">
+            <option [value]="1">Insert</option>
+            <option [value]="2">Update</option>
+            <option [value]="3">Delete</option>
+          </select>
+  
+          <button type="submit"> Save </button>
+        </div>
+        
+        
+             
+        
+        </div>
+    </div>
+    </div>
+  <!-- </div>  -->
+
+  <!-- <div class="form-group" style="padding-left: 20%;">
+    <div class="form-group">
+     TeamName      
+    </div>
+    
+    <div>
+      
+      <div>  <input [(ngModel)]="teamForm.TeamName" name="TeamName" type="text" /></div>      
+    </div>
+    <br/>
+    <div>
+      <div colspan="3">
+
+        <select [(ngModel)]="actionType" name="actionType" (ngChangeModel)="actionType=$event">
+          <option [value]="1">Insert</option>
+          <option [value]="2">Update</option>
+          <option [value]="3">Delete</option>
+        </select>
+
+
+      </div>
+      <br/>
+      <div colspan="3">
+           <button type="submit"> Save </button>
+      </div>
+    </div>
+  </div> -->
+ 
+
+</form> 
+<br/>
+
+
+<table class="table table-info table-striped table-condensed table-bordered" style="padding-left: 1%;">
+  <thead class="thead-light">
+  <tr>
+    <th> Id </th> <th> TeamName </th>   
+     <th> Update  </th>
+     <th> Delete  </th>
+  </tr>
+</thead>
+  <tr *ngFor="let item of showInfo()">
+    <td> {{item.Id}} </td> 
+    <td> {{item.TeamName}} </td>   
+      <td>
+          <button (click)="updateEntity(item)" class="btn btn-warning" data-toggle="modal" data-target="#exampleModal">Update</button>
+      </td>
+      <td>
+        <button (click)="deleteEntity(item)" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Delete</button>
+      </td>
+  </tr>
+</table>

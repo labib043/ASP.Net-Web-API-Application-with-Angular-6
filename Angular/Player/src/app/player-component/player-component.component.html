@@ -1,0 +1,105 @@
+<table class="table table-warning table-striped table-condensed table-bordered">
+  <thead appYelloeFellow>
+  <tr>
+    <th> PlayerId </th> <th> PlayerName </th>
+    <th> Image </th> <th> IsAvailable </th>
+     <th> BirthDay </th> <th> TeamId </th>
+     <th> Update  </th>
+     <th> Delete  </th>
+  </tr>
+</thead>
+  <tr *ngFor="let item of showInfo()" appYelloeFellow>
+    <td> {{item.PlayerId}} </td> 
+    <td> {{item.PlayerName}} </td>
+    <td> <img src="{{item.Image}}" width="50" height="50" />  </td>
+     <td> 
+      <input type="checkbox"   [checked]="item.IsAvailable" />
+    
+     </td>
+     <td> {{ item.BirthDay | date:'yyyy-MM-dd'}} </td>
+      <td> {{item.TeamId}} </td>
+      <td>
+          <button (click)="updateEntity(item)" class="btn btn-warning">Update</button>
+      </td>
+      <td>
+        <button (click)="deleteEntity(item)" class="btn btn-danger">Delete</button>
+      </td>
+  </tr>
+</table>
+
+<form novalidate (ngSubmit)="submitInfo(playerForm , actionType)" >
+
+  <table class="table table-danger table-striped table-condensed table-bordered">
+    <tr>
+      
+      <!-- <td> PlayerId </td> -->
+       <td style="font-weight: bolder;"> PlayerName </td>
+      <td style="font-weight: bolder;"> Image </td> <td style="font-weight: bolder;"> IsAvailable </td>
+       <td style="font-weight: bolder;"> BirthDay </td> <td style="font-weight: bolder;"> Choose TeamName </td>
+      
+    </tr>
+    <tr>
+      <!-- <td> <input [(ngModel)]="playerForm.PlayerId" name="id" type="text" [disabled]="true" /> </td>  -->
+      <td>  <input #Name="ngModel" [(ngModel)]="playerForm.PlayerName" name="PlayerName" type="text" required minlength="2" maxlength="50"  />
+        <div *ngIf="Name.dirty||Name.invalid">
+          <div *ngIf="Name.errors?.required" style="color: red;">
+              Player Name Is required
+          </div>
+          <div *ngIf="Name.errors?.minlength" style="color: green;">
+           Charecter of Player Name  Must Be more than 3
+           </div>
+
+           <div *ngIf="Name.errors?.maxlength" style="color: palevioletred;">
+             Charecter of Player Name Must Be less than 10
+             </div>
+
+        </div>
+      
+      </td>
+      <td>
+        
+        
+        <input type="file" id="Image" (change)="upload($event)" name="Image" />
+
+        <img src="{{playerForm.Image}}" width="50" height="50" /> 
+      
+      
+      </td>
+       <td> 
+       
+        <input [(ngModel)]="playerForm.IsAvailable" type="checkbox" name="IsAvailable" />
+      
+       </td>
+       <td>   
+        <input type="date" name="BirthDay" [ngModel] ="editDate | date:'yyyy-MM-dd'" (ngModelChange)="editDate = $event">
+        
+
+      </td>
+        <td>
+          <select [(ngModel)]="playerForm.TeamId" name="TeamId" style="width: 100px;   background-color: transparent;color: black; ">
+            <option *ngFor="let item of getTeamList()" [value]="item.Id" (ngChangeModel)="playerForm.TeamId=$event"> {{item.TeamName}}</option>
+          </select>
+
+        </td>
+    </tr>
+    <tr>
+      <td colspan="3" style="padding-left: 5%; align-items: center;align-content: center;">
+        <div style="font-weight: bold;align-content: center;"> Actions</div>
+          <select [(ngModel)]="actionType" name="actionType" (ngChangeModel)="actionType=$event">
+              
+          <option [value]="1">Insert</option>
+          <option [value]="2">Update</option>
+          <option [value]="3">Delete</option>
+        </select>
+        
+      </td>
+      
+
+      <td colspan="2">
+           <button type="submit" class="btn btn-success"> Save </button>
+      </td>
+    </tr>
+  </table>
+ 
+
+</form>
